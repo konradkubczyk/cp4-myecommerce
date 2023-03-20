@@ -2,7 +2,7 @@ package com.kubczyk.myecommerce;
 
 import org.junit.jupiter.api.Test;
 
-public class FirstTest {
+public class BaseTestSchemaTest {
 
     @Test
     void testIt() {

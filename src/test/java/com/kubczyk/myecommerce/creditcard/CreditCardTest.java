@@ -23,7 +23,7 @@ public class CreditCardTest {
     }
 
     @Test
-    void idCantAssignLimitBelow100() {
+    void itCantAssignLimitBelow100V1() {
         CreditCard card = new CreditCard("1234-5678");
 
         try {
@@ -32,16 +32,40 @@ public class CreditCardTest {
         } catch (CreditBelowThresholdException e) {
             assertTrue(true);
         }
-
-        // Alternative
-        assertThrows(CreditBelowThresholdException.class, () -> card.assignLimit(BigDecimal.valueOf(50)));
     }
 
     @Test
-    void testDoubleAndFloats() {
-        // double x1 = 0.03;
-        // double x2 = 0.01;
-        // double result = x1 - x2;
-        // System.out.println(result);
+    void itCantAssignLimitBelow100V2() {
+        CreditCard card1 = new CreditCard("1234-5678");
+        CreditCard card2 = new CreditCard("1234-5678");
+        CreditCard card3 = new CreditCard("1234-5678");
+
+        assertThrows(CreditBelowThresholdException.class, () -> card1.assignLimit(BigDecimal.valueOf(50)));
+
+        assertThrows(CreditBelowThresholdException.class, () -> card2.assignLimit(BigDecimal.valueOf(99)));
+
+        assertDoesNotThrow(() -> card3.assignLimit(BigDecimal.valueOf(100)));
+    }
+
+    @Test
+    void cantAssignLimitTwice() {
+        CreditCard card = new CreditCard("1234-5678");
+
+        assertDoesNotThrow(() -> card.assignLimit(BigDecimal.valueOf(777)));
+        assertThrows(LimitAlreadyAssignedException.class, () -> card.assignLimit(BigDecimal.valueOf(1000)));
+    }
+
+    @Test
+    void itAllowsToWithdraw() {
+        CreditCard card = new CreditCard("1234-5678");
+        card.assignLimit(BigDecimal.valueOf(1000));
+
+        card.withdraw(BigDecimal.valueOf(100));
+
+        assertEquals(BigDecimal.valueOf(900), card.getBalance());
+
+        assertDoesNotThrow(() -> card.withdraw(BigDecimal.valueOf(900)));
+        assertThrows(WithdrawalAmountOverBalanceException.class, () -> card.withdraw(BigDecimal.valueOf(1)));
+        assertThrows(WithdrawalAmountOverLimitException.class, () -> card.withdraw(BigDecimal.valueOf(1001)));
     }
 }
