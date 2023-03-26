@@ -1,12 +1,16 @@
 package com.kubczyk.myecommerce.creditcard;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 public class CreditCard {
     private final String cardNumber;
     private BigDecimal balance;
     private BigDecimal credit;
-    private int withdrawals = 0;
+
+    private ArrayList<BillingCycle> billingCycles = new ArrayList<>(Arrays.asList(new BillingCycle()));
 
     public CreditCard(String cardNumber) {
         this.cardNumber = cardNumber;
@@ -44,10 +48,28 @@ public class CreditCard {
         if (amount.compareTo(balance) > 0) {
             throw new WithdrawalAmountOverBalanceException();
         }
-        if (withdrawals == 10) {
-            throw new TooManyWithdrawalsInBillingCycleException();
-        }
-        withdrawals++;
-        balance = balance.subtract(amount);
+
+        Withdrawal withdrawal = new Withdrawal();
+        withdrawal.setDate(new Date());
+        withdrawal.setAmount(amount);
+        billingCycles.get(billingCycles.size() - 1).addWithdrawal(withdrawal);
+
+        this.balance = balance.subtract(amount);
+    }
+
+    public void repay(BigDecimal amount) {
+        this.balance = balance.add(amount);
+    }
+
+    public void closeBillingCycle() {
+        this.billingCycles.add(new BillingCycle());
+    }
+
+    public ArrayList<Withdrawal> getWithdrawalReport() {
+        return this.getWithdrawalReport(this.billingCycles.size() - 1);
+    }
+
+    public ArrayList<Withdrawal> getWithdrawalReport(int billingCycleNumber) {
+        return this.billingCycles.get(billingCycleNumber).getWithdrawals();
     }
 }
