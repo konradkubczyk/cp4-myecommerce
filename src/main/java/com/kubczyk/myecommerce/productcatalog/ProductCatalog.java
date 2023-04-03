@@ -1,21 +1,17 @@
 package com.kubczyk.myecommerce.productcatalog;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class ProductCatalog {
+    ProductStorage productStorage;
 
-    private List<Product> products;
-
-    public ProductCatalog() {
-        this.products = new ArrayList<>();
+    public ProductCatalog(ProductStorage productStorage) {
+        this.productStorage = productStorage;
     }
 
     public List<Product> allProducts() {
-        return products;
+        return productStorage.allProducts();
     }
 
     public String addProduct(String name, String description) {
@@ -25,17 +21,28 @@ public class ProductCatalog {
                 description
         );
 
-        this.products.add(newProduct);
+        productStorage.add(newProduct);
 
         return newProduct.getId();
     }
 
     public Product loadById(String productId) {
-        for (Product product : products) {
-            if (Objects.equals(product.getId(), productId)) {
-                return product;
-            }
-        }
-        throw new ProductNotFoundException();
+        return productStorage.loadById(productId);
+    }
+
+    public void changePrice(String productId, BigDecimal price) {
+        productStorage.loadById(productId).setPrice(price);
+    }
+
+    public void assignImage(String productId, String imageKey) {
+        productStorage.loadById(productId).setImageKey(imageKey);
+    }
+
+    public void publishProduct(String productId) {
+        productStorage.loadById(productId).setPublished(true);
+    }
+
+    public List<Product> allPublishedProducts() {
+        return productStorage.allPublishedProducts();
     }
 }

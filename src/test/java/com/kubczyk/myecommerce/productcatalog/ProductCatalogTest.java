@@ -27,7 +27,7 @@ public class ProductCatalogTest {
         ProductCatalog catalog = thereIsProductCatalog();
 
         // Act
-        String productId = catalog.addProduct("lego set 8083", "nice one");
+        catalog.addProduct("lego set 8083", "nice one");
 
         // Assert
         List<Product> products = catalog.allProducts();
@@ -41,8 +41,10 @@ public class ProductCatalogTest {
 
         String productId = catalog.addProduct("PC 2", "It finally has a successor! :o");
 
-        Product loadedProduct = catalog.loadById(productId);
-        assert loadedProduct.getId().equals(productId);
+        catalog.changePrice(productId, BigDecimal.valueOf(20.20));
+
+        Product loaded = catalog.loadById(productId);
+        assertEquals(BigDecimal.valueOf(20.20), loaded.getPrice());
     }
 
     @Test
@@ -63,10 +65,9 @@ public class ProductCatalogTest {
         ProductCatalog catalog = thereIsProductCatalog();
 
         String productId = catalog.addProduct("Elephant", "Big animal :O");
-        Product loadedProduct = catalog.loadById(productId);
 
-        assertDoesNotThrow(() -> loadedProduct.setImageFilename("happy_elephant.webp"));
-        assertEquals("happy_elephant.webp", loadedProduct.getImageFilename());
+        assertDoesNotThrow(() -> catalog.assignImage(productId, "happy_elephant.webp"));
+        assertEquals("happy_elephant.webp", catalog.loadById(productId).getImageKey());
     }
 
     @Test
@@ -75,14 +76,11 @@ public class ProductCatalogTest {
         ProductCatalog catalog = thereIsProductCatalog();
 
         String productId = catalog.addProduct("Clay", "Make of it what you want...");
-        Product loadedProduct = catalog.loadById(productId);
-        loadedProduct.setPrice(BigDecimal.valueOf(96));
-        loadedProduct.setImageFilename("amazing_clay.webp");
+        catalog.changePrice(productId, BigDecimal.valueOf(96));
+        catalog.assignImage(productId, "amazing_clay.webp");
 
-        assertDoesNotThrow(() -> loadedProduct.setPublished(true));
-        assertEquals(true, loadedProduct.isPublished());
-        assertDoesNotThrow(() -> loadedProduct.setPublished(false));
-        assertEquals(false, loadedProduct.isPublished());
+        assertDoesNotThrow(() -> catalog.publishProduct(productId));
+        assertTrue(catalog.loadById(productId).isPublished());
     }
 
     @Test
@@ -91,16 +89,23 @@ public class ProductCatalogTest {
         ProductCatalog catalog = thereIsProductCatalog();
 
         String productId = catalog.addProduct("Donkey", "He is gray");
-        Product loadedProduct = catalog.loadById(productId);
 
-        assertThrows(ProductDetailsMissingException.class, () -> loadedProduct.setPublished(true));
-        loadedProduct.setPrice(BigDecimal.valueOf(100));
-        assertThrows(ProductDetailsMissingException.class, () -> loadedProduct.setPublished(true));
-        loadedProduct.setImageFilename("happy_donkey.webp");
-        assertEquals(false, loadedProduct.isPublished());
-        assertDoesNotThrow(() -> loadedProduct.setPublished(true));
-        assertEquals(true, loadedProduct.isPublished());
+        assertThrows(ProductCantBePublished.class, () -> catalog.publishProduct(productId));
+        catalog.changePrice(productId, BigDecimal.valueOf(100));
+        assertThrows(ProductCantBePublished.class, () -> catalog.publishProduct(productId));
+        catalog.assignImage(productId, "happy_donkey.webp");
+        assertFalse(catalog.loadById(productId).isPublished());
+        assertDoesNotThrow(() -> catalog.publishProduct(productId));
+        assertTrue(catalog.loadById(productId).isPublished());
+    }
 
+    @Test
+    void itDoesNotShowDraftProducts() {
+
+        ProductCatalog catalog = thereIsProductCatalog();
+        catalog.addProduct("SomeBlocks", "Literally.");
+
+        assertEquals(0, catalog.allPublishedProducts().size());
     }
 
     private void assertListIsEmpty(List<Product> products) {
@@ -108,6 +113,6 @@ public class ProductCatalogTest {
     }
 
     private ProductCatalog thereIsProductCatalog() {
-        return new ProductCatalog();
+        return new ProductCatalog(new HashMapProductStorage());
     }
 }
