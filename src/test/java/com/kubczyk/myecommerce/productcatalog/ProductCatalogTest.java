@@ -3,6 +3,7 @@ package com.kubczyk.myecommerce.productcatalog;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductCatalogTest {
@@ -46,22 +47,60 @@ public class ProductCatalogTest {
 
     @Test
     void itAllowsToChangePrice() {
-        fail("Not yet implemented");
+
+        ProductCatalog catalog = thereIsProductCatalog();
+
+        String productId = catalog.addProduct("Mysterious CD", "Some audio");
+        Product loadedProduct = catalog.loadById(productId);
+
+        assertDoesNotThrow(() -> loadedProduct.setPrice(BigDecimal.valueOf(88)));
+        assertEquals(BigDecimal.valueOf(88), loadedProduct.getPrice());
     }
 
     @Test
     void itAllowsToAssignImage() {
-        fail("Not yet implemented");
+
+        ProductCatalog catalog = thereIsProductCatalog();
+
+        String productId = catalog.addProduct("Elephant", "Big animal :O");
+        Product loadedProduct = catalog.loadById(productId);
+
+        assertDoesNotThrow(() -> loadedProduct.setImageFilename("happy_elephant.webp"));
+        assertEquals("happy_elephant.webp", loadedProduct.getImageFilename());
     }
 
     @Test
     void itAllowsToPublishProduct() {
-        fail("Not yet implemented");
+
+        ProductCatalog catalog = thereIsProductCatalog();
+
+        String productId = catalog.addProduct("Clay", "Make of it what you want...");
+        Product loadedProduct = catalog.loadById(productId);
+        loadedProduct.setPrice(BigDecimal.valueOf(96));
+        loadedProduct.setImageFilename("amazing_clay.webp");
+
+        assertDoesNotThrow(() -> loadedProduct.setPublished(true));
+        assertEquals(true, loadedProduct.isPublished());
+        assertDoesNotThrow(() -> loadedProduct.setPublished(false));
+        assertEquals(false, loadedProduct.isPublished());
     }
 
     @Test
     void publicationIsPossibleWhenPriceAndImageAreDefined() {
-        fail("Not yet implemented");
+
+        ProductCatalog catalog = thereIsProductCatalog();
+
+        String productId = catalog.addProduct("Donkey", "He is gray");
+        Product loadedProduct = catalog.loadById(productId);
+
+        assertThrows(ProductDetailsMissingException.class, () -> loadedProduct.setPublished(true));
+        loadedProduct.setPrice(BigDecimal.valueOf(100));
+        assertThrows(ProductDetailsMissingException.class, () -> loadedProduct.setPublished(true));
+        loadedProduct.setImageFilename("happy_donkey.webp");
+        assertEquals(false, loadedProduct.isPublished());
+        assertDoesNotThrow(() -> loadedProduct.setPublished(true));
+        assertEquals(true, loadedProduct.isPublished());
+
     }
 
     private void assertListIsEmpty(List<Product> products) {
