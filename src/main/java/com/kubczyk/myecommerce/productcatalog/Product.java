@@ -15,7 +15,7 @@ public class Product {
     public Product(UUID productId, String name, String description) {
         this.productId = productId;
         this.name = name;
-        this.description = name;
+        this.description = description;
     }
 
     public String getId() {
