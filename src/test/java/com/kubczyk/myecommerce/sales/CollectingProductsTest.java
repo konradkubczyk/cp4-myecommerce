@@ -6,32 +6,34 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 public class CollectingProductsTest {
+
     private CartStorage cartStorage;
     private ProductDetailsProvider productDetailsProvider;
 
     @BeforeEach
-    void setup() {
+    void setUp(){
         cartStorage = new CartStorage();
         productDetailsProvider = new ProductDetailsProvider();
     }
 
     @Test
-    void itAllowsToCollectProductsToCart() {
+    void itAllowsToCollectProductsToCart(){
+
         // Arrange
         Sales sales = thereIsSalesModule();
         String productId = thereIsProduct();
-        String customer = thereIsCustomer("Kuba");
+        String customerId = thereIsCustomer("anon");
 
         // Act
-        sales.addToCart(customer, productId);
+        sales.addToCart(customerId, productId);
 
         // Assert
-        assertThereIsNProductsInCustomersCart(customer, 1);
+        assertThereIsXProductsInCustomersCart(customerId, 1);
     }
 
-    private void assertThereIsNProductsInCustomersCart(String customerId, int productsCount) {
-        Cart customerCart = cartStorage.load(customerId).get();
-        assert customerCart.itemsCount() == productsCount;
+    private void assertThereIsXProductsInCustomersCart(String customerId, int productsCount) {
+        Cart customersCart = cartStorage.load(customerId).get();
+        assert customersCart.itemsCount() == productsCount;
     }
 
     private String thereIsProduct() {
@@ -43,6 +45,6 @@ public class CollectingProductsTest {
     }
 
     private Sales thereIsSalesModule() {
-        return new Sales(cartStorage, productDetailsProvider);
+        return new Sales(cartStorage,productDetailsProvider);
     }
 }

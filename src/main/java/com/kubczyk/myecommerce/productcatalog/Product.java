@@ -1,6 +1,8 @@
 package com.kubczyk.myecommerce.productcatalog;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Product {
@@ -60,8 +62,20 @@ public class Product {
 
     public void setPublished(boolean published) {
         if (published && (price == null || imageKey == null)) {
-            throw new ProductCantBePublished();
+            throw new ProductCantBePublishedException();
         }
         isPublished = published;
+    }
+
+    Map<String, Object> getProductInfo() {
+        Map<String, Object> productInfo = new HashMap<>();
+        productInfo.put("productId", this.productId);
+        productInfo.put("name", this.name);
+        productInfo.put("desc", this.description);
+        productInfo.put("price", this.price);
+        productInfo.put("imageKey", this.imageKey);
+        productInfo.put("isPublished", this.isPublished);
+
+        return productInfo;
     }
 }

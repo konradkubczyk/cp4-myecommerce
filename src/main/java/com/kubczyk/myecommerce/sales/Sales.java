@@ -3,15 +3,17 @@ package com.kubczyk.myecommerce.sales;
 import java.util.Optional;
 
 public class Sales {
+
     private CartStorage cartStorage;
     private ProductDetailsProvider productDetailsProvider;
 
     public Sales(CartStorage cartStorage, ProductDetailsProvider productDetailsProvider) {
-        this.cartStorage=cartStorage;
-        this.productDetailsProvider=productDetailsProvider;
+        this.cartStorage = cartStorage;
+        this.productDetailsProvider = productDetailsProvider;
     }
 
     public void addToCart(String customerId, String productId) {
+
         Cart customersCart = loadForCustomer(customerId)
                 .orElse(Cart.empty());
 
@@ -24,10 +26,14 @@ public class Sales {
     }
 
     private Optional<ProductDetails> getProductDetails(String productId) {
-        return productDetailsProvider.load(productId);
+        return productDetailsProvider.loadCartForProduct(productId);
     }
 
     private Optional<Cart> loadForCustomer(String customerId) {
         return cartStorage.load(customerId);
+    }
+
+    public Offer getCurrentOffer(String customer) {
+        return new Offer();
     }
 }

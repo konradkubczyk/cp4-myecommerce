@@ -10,12 +10,14 @@ import java.math.BigDecimal;
 
 @SpringBootApplication
 public class App {
+
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
 
     @Bean
     ProductCatalog createProductCatalog() {
+
         ProductCatalog productCatalog = new ProductCatalog(new HashMapProductStorage());
 
         String product1 = productCatalog.addProduct("My ebook", "nice one");

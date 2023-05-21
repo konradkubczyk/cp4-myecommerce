@@ -90,9 +90,9 @@ public class ProductCatalogTest {
 
         String productId = catalog.addProduct("Donkey", "He is gray");
 
-        assertThrows(ProductCantBePublished.class, () -> catalog.publishProduct(productId));
+        assertThrows(ProductCantBePublishedException.class, () -> catalog.publishProduct(productId));
         catalog.changePrice(productId, BigDecimal.valueOf(100));
-        assertThrows(ProductCantBePublished.class, () -> catalog.publishProduct(productId));
+        assertThrows(ProductCantBePublishedException.class, () -> catalog.publishProduct(productId));
         catalog.assignImage(productId, "happy_donkey.webp");
         assertFalse(catalog.loadById(productId).isPublished());
         assertDoesNotThrow(() -> catalog.publishProduct(productId));

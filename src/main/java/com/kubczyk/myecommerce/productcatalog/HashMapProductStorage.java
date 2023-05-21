@@ -15,7 +15,9 @@ public class HashMapProductStorage implements ProductStorage {
 
     @Override
     public List<Product> allProducts() {
-        return new ArrayList<>(products.values());
+        return products.values()
+                .stream()
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -29,7 +31,7 @@ public class HashMapProductStorage implements ProductStorage {
     }
 
     @Override
-    public List<Product> allPublishedProducts() {
+    public List<Product> allPublishedProducts(){
         return products.values()
                 .stream()
                 .filter(Product::isPublished)
