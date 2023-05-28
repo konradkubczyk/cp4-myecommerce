@@ -2,5 +2,4 @@ package com.kubczyk.myecommerce.sales;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReservationRepository extends JpaRepository<Reservation, String> {
-}
+public interface ReservationRepository extends JpaRepository<Reservation, String> {}
