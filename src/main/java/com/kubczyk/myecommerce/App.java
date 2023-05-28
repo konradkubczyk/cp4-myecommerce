@@ -2,6 +2,10 @@ package com.kubczyk.myecommerce;
 
 import com.kubczyk.myecommerce.productcatalog.HashMapProductStorage;
 import com.kubczyk.myecommerce.productcatalog.ProductCatalog;
+import com.kubczyk.myecommerce.sales.CartStorage;
+import com.kubczyk.myecommerce.sales.OfferMaker;
+import com.kubczyk.myecommerce.sales.ProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.Sales;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -31,5 +35,11 @@ public class App {
         productCatalog.publishProduct(product2);
 
         return productCatalog;
+    }
+
+    @Bean
+    Sales createSales() {
+        return new Sales(new CartStorage(), new ProductDetailsProvider());
+//        return new Sales(new CartStorage(), new ProductDetailsProvider(), new OfferMaker());
     }
 }

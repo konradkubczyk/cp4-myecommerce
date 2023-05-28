@@ -17,6 +17,6 @@ public class CartStorage {
     }
 
     public void save(String customerId, Cart customersCart) {
-        carts.put(customerId,customersCart);
+        carts.put(customerId, customersCart);
     }
 }

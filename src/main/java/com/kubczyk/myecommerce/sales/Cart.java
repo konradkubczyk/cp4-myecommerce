@@ -1,15 +1,15 @@
 package com.kubczyk.myecommerce.sales;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-    Map<String,ProductDetails> products;
+    Map<String, ProductDetails> products;
 
     public Cart() {
         this.products = new HashMap<>();
     }
+
     public static Cart empty(){
         return new Cart();
     }
