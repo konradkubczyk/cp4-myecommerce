@@ -1,0 +1,24 @@
+#key_1: value
+#key_2: [1,2,3]
+#key_3:
+#  nested_key_1: [foo, mo]
+#  nested_key_2:
+#    zoo: gamma
+
+server:
+  port: 8181
+spring:
+  datasource:
+    url: jdbc:h2:mem:testDb # jdbc:protocol:medium:name
+    username: sa
+    passowrd: ~
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+CREATE TABLE `products` (
+`id` varchar(100) NOT NULL,
+`name` varchar(100),
+PRIMARY KEY(id)
+)
