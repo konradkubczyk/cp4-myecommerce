@@ -1,5 +1,9 @@
 package com.kubczyk.myecommerce.sales;
 
+import com.kubczyk.myecommerce.sales.cart.Cart;
+import com.kubczyk.myecommerce.sales.cart.CartStorage;
+import com.kubczyk.myecommerce.sales.product.AlwaysMissingProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.product.ProductDetailsProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,37 +15,36 @@ public class CollectingProductsTest {
     private ProductDetailsProvider productDetailsProvider;
 
     @BeforeEach
-    void setUp(){
+    void setup() {
         cartStorage = new CartStorage();
-        productDetailsProvider = new ProductDetailsProvider();
+        productDetailsProvider = new AlwaysMissingProductDetailsProvider();
     }
 
     @Test
-    void itAllowsToCollectProductsToCart(){
-
-        // Arrange
+    void itAllowsToCollectProductsToCart() {
+        //Arrange
         Sales sales = thereIsSalesModule();
-        String productId = thereIsProduct();
-        String customerId = thereIsCustomer("anon");
+        String productId =  thereIsProduct();
+        String customer = thereIsCustomer("Anon");
 
-        // Act
-        sales.addToCart(customerId, productId);
+        //Act
+        sales.addToCart(customer, productId);
 
-        // Assert
-        assertThereIsXProductsInCustomersCart(customerId, 1);
+        //Assert
+        assertThereIsNProductsInCustomersCart(customer, 1);
     }
 
-    private void assertThereIsXProductsInCustomersCart(String customerId, int productsCount) {
-        Cart customersCart = cartStorage.load(customerId).get();
-        assert customersCart.itemsCount() == productsCount;
-    }
-
-    private String thereIsProduct() {
-        return UUID.randomUUID().toString();
+    private void assertThereIsNProductsInCustomersCart(String customer, int productsCount) {
+        Cart customerCart = cartStorage.load(customer).get();
+        assert customerCart.itemsCount() == productsCount;
     }
 
     private String thereIsCustomer(String customerId) {
         return customerId;
+    }
+
+    private String thereIsProduct() {
+        return UUID.randomUUID().toString();
     }
 
     private Sales thereIsSalesModule() {

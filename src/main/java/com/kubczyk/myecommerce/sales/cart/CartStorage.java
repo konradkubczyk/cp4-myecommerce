@@ -1,12 +1,10 @@
-package com.kubczyk.myecommerce.sales;
+package com.kubczyk.myecommerce.sales.cart;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class CartStorage {
-
-    Map<String, Cart> carts;
+    HashMap<String, Cart> carts;
 
     public CartStorage() {
         this.carts = new HashMap<>();

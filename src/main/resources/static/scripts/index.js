@@ -1,12 +1,13 @@
-(() => console.log("It works!"))();
+const a = 5;
+let b =5;
 
-fetch("/api/products")
-    .then(response => response.json())
-    .then(data => console.log(data));
+const myFunction = (foo) => {
+    console.log(foo);
+}
 
 const getProducts = () => {
     return fetch("/api/products")
-        .then(response => response.json())
+        .then(response => response.json());
 }
 
 const addToCart = (productId) => {
@@ -19,23 +20,24 @@ const addToCart = (productId) => {
 const createHtmlElementFromString = (template) => {
     let tmpElement = document.createElement('div');
     tmpElement.innerHTML = template.trim();
+
     return tmpElement.firstChild;
 }
 
-const createProductComponent = (product) =>{
+const createProductComponent = (product) => {
     const template = `
-    <div class="cos">
         <li class="product">
-            <span class="name">${product.name}</span>
-            <div class="price">
+            <span>${product.name}</span>
+            <div>
                 <span>${product.price}</span>
             </div>
             <button
                 class="product__add-to-cart"
                 data-product-id="${product.id}"
-            >Add to cart</button>
+            >
+                Add to cart
+            </button>
         </li>
-    </div>
     `;
 
     return createHtmlElementFromString(template);
@@ -45,9 +47,8 @@ const getCurrentOffer = () => {
     return fetch("/api/get-current-offer")
         .then(response => response.json());
 }
-
 const refreshCurrentOffer = () => {
-    console.log('i am going to refresh an offer');
+    console.log('i am going to refresh offer');
     const offerElement = document.querySelector('.cart');
 
     getCurrentOffer()
@@ -63,18 +64,22 @@ const initializeAddToCartHandler = (el) => {
         addToCart(btn.getAttribute('data-product-id'))
             .then(refreshCurrentOffer())
     });
+
     return el;
 }
-
 
 (async () => {
     console.log("It works :)");
     const productsList = document.querySelector('#productsList');
+
     refreshCurrentOffer();
+
     const products = await getProducts();
+
     products
         .map(p => createProductComponent(p))
         .map(el => initializeAddToCartHandler(el))
         .forEach(el => productsList.appendChild(el));
+
     console.log("post get products");
 })();

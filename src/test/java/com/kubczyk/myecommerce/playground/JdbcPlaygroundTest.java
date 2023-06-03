@@ -17,35 +17,26 @@ public class JdbcPlaygroundTest {
     @BeforeEach
     void setup() {
         jdbcTemplate.execute("DROP TABLE products IF EXISTS");
-        jdbcTemplate.execute(
-            "CREATE TABLE `products` (" +
-            "`id` varchar(100) NOT NULL," +
-            "`name` varchar(100)," +
-            "PRIMARY KEY(id)" +
-            ")"
-        );
-    }
-
-    @Test
-    void helloWorldViaDb() {
-        String result = jdbcTemplate.queryForObject(
-            "SELECT 'Hello world'",
-            String.class
-        );
+        jdbcTemplate.execute("CREATE TABLE `products` (" +
+                "`id` varchar(100) NOT NULL," +
+                "`name` varchar(100)," +
+                "PRIMARY KEY(id)" +
+                ")");
     }
 
     @Test
     void insert() {
         String productId = "my_product_1";
-        String productName = "Sample product";
+        String productName = "Lego set";
 
         jdbcTemplate.update(
-            "INSERT INTO `products` (id, name) values (?, ?)",
-            productId,
-            productName
-        );
+                "INSERT INTO `products` (id, name) values (?,?)",
+                productId,
+                productName);
 
-        int productsCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM `product`", Integer.class);
+        int productsCount = jdbcTemplate.queryForObject(
+                "select count(*) from `products`",
+                Integer.class);
 
         assert productsCount == 1;
     }
@@ -53,24 +44,30 @@ public class JdbcPlaygroundTest {
     @Test
     void select() {
         String productId = "my_product_1";
-        String productName = "Sample product";
+        String productName = "Lego set";
 
         jdbcTemplate.update(
-                "INSERT INTO `products` (id, name) values (?, ?)",
+                "INSERT INTO `products` (id, name) values (?,?)",
                 productId,
-                productName
-        );
+                productName);
 
-        String querySql = "SELECT * FROM `products` WHERE id = ?";
+        String querySql = "Select * from `products` where id = ?";
         HashMap<String, Object> loaded = jdbcTemplate.queryForObject(
-            querySql,
-            new Object[]{productId},
-            (result, identifier) -> {
-                HashMap<String, Object> myResult = new HashMap<>();
-                myResult.put("product_id", result.getString("id"));
-                myResult.put("product_name", result.getString("name"));
-                return myResult;
-            }
-        );
+                querySql,
+                new Object[]{productId},
+                (r, i) -> {
+                    HashMap<String, Object> myResult = new HashMap<>();
+                    myResult.put("product_id", r.getString("id"));
+                    myResult.put("product_name", r.getString("name"));
+                    return  myResult;
+                });
+    }
+
+
+    @Test
+    void helloWorldViaDB() {
+        String result = jdbcTemplate.queryForObject(
+                "select 'Hello world'",
+                String.class);
     }
 }

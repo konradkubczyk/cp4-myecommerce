@@ -1,19 +1,19 @@
-package com.kubczyk.myecommerce.creditcard;
+package com.kubczyk.myecommerce.playground;
 
 import org.junit.jupiter.api.Test;
 
 public class NumericRepresentationTest {
 
     @Test
-    void letsCheckDouble() {
-        double a = 0.003;
-        double b = 0.001;
-        double c = b - a;
-        System.out.println(c);
+    void lestCheckDouble() {
+        double a = 1.101;
+        double b = -2.109;
+        double c = a - b;
+        System.out.println(b-a);
     }
 
     @Test
-    void letsCheckFloats() {
+    void lestCheckFloats() {
         float a = 0.003f;
         float b = 0.001f;
         float c = b - a;

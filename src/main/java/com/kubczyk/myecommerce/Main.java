@@ -9,7 +9,7 @@ public class Main {
         List<String> names = Arrays.asList("Jakub", "Michal", "Kasia", "Maria");
 
         Greeter greeter = new Greeter();
-        greeter.greet("Kuba"); // -> Hello Kuba
+        greeter.greet("Anon"); // -> Hello Anon
 
         System.out.println();
 

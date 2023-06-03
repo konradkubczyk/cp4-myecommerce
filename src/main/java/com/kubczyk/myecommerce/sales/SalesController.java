@@ -1,5 +1,6 @@
 package com.kubczyk.myecommerce.sales;
 
+import com.kubczyk.myecommerce.sales.offering.Offer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +16,11 @@ public class SalesController {
     }
 
     @GetMapping("/api/get-current-offer")
-    public Offer getCurrentOffer(String customer) {
+    public Offer getCurrentOffer() {
         return sales.getCurrentOffer(getCurrentCustomer());
     }
 
-    @PostMapping("api/add-to-cart/{productId}")
+    @PostMapping("/api/add-to-cart/{productId}")
     public void addToCart(@PathVariable String productId) {
         sales.addToCart(getCurrentCustomer(), productId);
     }

@@ -1,16 +1,18 @@
 package com.kubczyk.myecommerce;
 
 import com.kubczyk.myecommerce.productcatalog.HashMapProductStorage;
+import com.kubczyk.myecommerce.productcatalog.Product;
 import com.kubczyk.myecommerce.productcatalog.ProductCatalog;
-import com.kubczyk.myecommerce.sales.CartStorage;
-import com.kubczyk.myecommerce.sales.OfferMaker;
-import com.kubczyk.myecommerce.sales.ProductDetailsProvider;
 import com.kubczyk.myecommerce.sales.Sales;
+import com.kubczyk.myecommerce.sales.cart.CartStorage;
+import com.kubczyk.myecommerce.sales.product.ProductCatalogProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.product.ProductDetails;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @SpringBootApplication
 public class App {
@@ -37,9 +39,28 @@ public class App {
         return productCatalog;
     }
 
+
+    Sales createSalesViaLambda(ProductCatalog catalog) {
+        return new Sales(
+                new CartStorage(),
+                (String productId) -> {
+                    Product product = catalog.loadById(productId);
+                    if (product == null) {
+                        return Optional.empty();
+                    }
+                    return Optional.of(new ProductDetails(
+                            product.getId(),
+                            product.getName(),
+                            product.getPrice()));
+                }
+        );
+    }
+
     @Bean
-    Sales createSales() {
-        return new Sales(new CartStorage(), new ProductDetailsProvider());
-//        return new Sales(new CartStorage(), new ProductDetailsProvider(), new OfferMaker());
+    Sales createSalesViaObject(ProductCatalog catalog) {
+        return new Sales(
+                new CartStorage(),
+                new ProductCatalogProductDetailsProvider(catalog)
+        );
     }
 }

@@ -16,8 +16,8 @@ public class ListProductStorage implements ProductStorage {
     }
 
     @Override
-    public void add(Product newProduct) {
-        products.add(newProduct);
+    public void add(Product product) {
+        products.add(product);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ListProductStorage implements ProductStorage {
     public List<Product> allPublishedProducts() {
         return products
                 .stream()
-                .filter(Product::isPublished)
+                .filter(Product::isOnline)
                 .collect(Collectors.toList());
     }
 }

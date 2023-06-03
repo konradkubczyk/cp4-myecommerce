@@ -1,5 +1,7 @@
 package com.kubczyk.myecommerce.sales;
 
+import com.kubczyk.myecommerce.sales.reservation.Reservation;
+import com.kubczyk.myecommerce.sales.reservation.ReservationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,19 +17,23 @@ public class ReservationStorageTest {
 
     @Test
     void insert() {
-        String productId = UUID.randomUUID().toString();
         Reservation reservation = new Reservation(
-                productId,
-            BigDecimal.TEN,
-            "payment"
-        );
+                UUID.randomUUID().toString(),
+                BigDecimal.TEN,
+                "payment");
         reservationRepository.save(reservation);
-
-        Reservation loaded = reservationRepository.findById(productId).get();
     }
 
     @Test
     void select() {
+        String id = UUID.randomUUID().toString();
+        Reservation reservation = new Reservation(
+                id,
+                BigDecimal.TEN,
+                "payment");
+        reservationRepository.save(reservation);
 
+        Reservation loaded =  reservationRepository.findById(id)
+                .get();
     }
 }
