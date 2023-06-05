@@ -1,9 +1,52 @@
 body {
-    background: #aabbbb;
+    background: #AABB;
     color: #222222;
+    font-family: sans;
+    margin: 10px;
+}
+
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+nav > h1 {
+	margin: 0;
+}
+
+button {
+	padding: 7px;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	background-color: #276499;
+	cursor: pointer;
+}
+
+.cart {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+#productsList {
     display: flex;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+    gap: 10px;
+    padding: 0px;
+}
+
+#productsList .product {
+	background: white;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0px 5px 5px #00000010;
+	border-radius: 5px;
+	gap: 10px;
+	align-items: center;
+}
+
+.product__add-to-cart {
+	width: 100%;
 }
