@@ -14,7 +14,7 @@ public class ProductCatalogProductDetailsProvider implements ProductDetailsProvi
     }
 
     @Override
-    public Optional<ProductDetails> loadForProduct(String productId) {
+    public Optional<ProductDetails> load(String productId) {
         Product product = productCatalog.loadById(productId);
         if (product == null) {
             return Optional.empty();

@@ -2,7 +2,9 @@ package com.kubczyk.myecommerce.sales;
 
 import com.kubczyk.myecommerce.sales.cart.Cart;
 import com.kubczyk.myecommerce.sales.cart.CartStorage;
+import com.kubczyk.myecommerce.sales.offering.OfferCalculator;
 import com.kubczyk.myecommerce.sales.product.AlwaysMissingProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.product.InMemoryProductDetailsProvider;
 import com.kubczyk.myecommerce.sales.product.ProductDetailsProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +14,12 @@ import java.util.UUID;
 public class CollectingProductsTest {
 
     private CartStorage cartStorage;
-    private ProductDetailsProvider productDetailsProvider;
+    private InMemoryProductDetailsProvider productDetails;
 
     @BeforeEach
     void setup() {
         cartStorage = new CartStorage();
-        productDetailsProvider = new AlwaysMissingProductDetailsProvider();
+        productDetails = new InMemoryProductDetailsProvider();
     }
 
     @Test
@@ -36,7 +38,7 @@ public class CollectingProductsTest {
 
     private void assertThereIsNProductsInCustomersCart(String customer, int productsCount) {
         Cart customerCart = cartStorage.load(customer).get();
-        assert customerCart.itemsCount() == productsCount;
+        assert customerCart.getItemsCount() == productsCount;
     }
 
     private String thereIsCustomer(String customerId) {
@@ -48,6 +50,10 @@ public class CollectingProductsTest {
     }
 
     private Sales thereIsSalesModule() {
-        return new Sales(cartStorage, productDetailsProvider);
+        return new Sales(
+            cartStorage,
+            productDetails,
+            new OfferCalculator(productDetails)
+        );
     }
 }

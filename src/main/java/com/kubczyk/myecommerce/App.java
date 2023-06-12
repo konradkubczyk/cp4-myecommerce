@@ -5,6 +5,8 @@ import com.kubczyk.myecommerce.productcatalog.Product;
 import com.kubczyk.myecommerce.productcatalog.ProductCatalog;
 import com.kubczyk.myecommerce.sales.Sales;
 import com.kubczyk.myecommerce.sales.cart.CartStorage;
+import com.kubczyk.myecommerce.sales.offering.OfferCalculator;
+import com.kubczyk.myecommerce.sales.product.InMemoryProductDetailsProvider;
 import com.kubczyk.myecommerce.sales.product.ProductCatalogProductDetailsProvider;
 import com.kubczyk.myecommerce.sales.product.ProductDetails;
 import org.springframework.boot.SpringApplication;
@@ -39,28 +41,30 @@ public class App {
         return productCatalog;
     }
 
-
-    Sales createSalesViaLambda(ProductCatalog catalog) {
-        return new Sales(
-                new CartStorage(),
-                (String productId) -> {
-                    Product product = catalog.loadById(productId);
-                    if (product == null) {
-                        return Optional.empty();
-                    }
-                    return Optional.of(new ProductDetails(
-                            product.getId(),
-                            product.getName(),
-                            product.getPrice()));
-                }
-        );
-    }
+// TODO: Fix or remove this
+//    Sales createSalesViaLambda(ProductCatalog catalog) {
+//        return new Sales(
+//                new CartStorage(),
+//                (String productId) -> {
+//                    Product product = catalog.loadById(productId);
+//                    if (product == null) {
+//                        return Optional.empty();
+//                    }
+//                    return Optional.of(new ProductDetails(
+//                            product.getId(),
+//                            product.getName(),
+//                            product.getPrice()));
+//                }
+//        );
+//    }
 
     @Bean
     Sales createSalesViaObject(ProductCatalog catalog) {
+        InMemoryProductDetailsProvider productDetails = new InMemoryProductDetailsProvider();
         return new Sales(
-                new CartStorage(),
-                new ProductCatalogProductDetailsProvider(catalog)
+            new CartStorage(),
+            productDetails,
+            new OfferCalculator(productDetails)
         );
     }
 }
