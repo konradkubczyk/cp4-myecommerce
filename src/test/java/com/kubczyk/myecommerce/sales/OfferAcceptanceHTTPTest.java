@@ -21,18 +21,16 @@ public class OfferAcceptanceHTTPTest {
 
     @Test
     void itAllowsToAcceptOffer() {
-        //Arrange
-        //thereAreProducts
+        // Arrange
         String productId = thereIsExampleProduct();
-        //customerAddedProductToCart
         http.postForEntity(String.format("/api/add-to-cart/%s", productId), null, String.class);
         http.postForEntity(String.format("/api/add-to-cart/%s", productId), null, String.class);
 
-        //Act
+        // Act
         AcceptOffer acceptOffer = new AcceptOffer("Anon", "anon@example.com");
         ResponseEntity<PaymentData> response = http.postForEntity(String.format("/api/accept-offer"), acceptOffer, PaymentData.class);
 
-        //Assert
+        // Assert
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertNotNull(response.getBody().getPaymentUrl());
     }

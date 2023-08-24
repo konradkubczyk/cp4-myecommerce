@@ -3,7 +3,7 @@ package com.kubczyk.myecommerce.payu;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -40,7 +40,7 @@ public class PayUTest {
                         .setLanguage("Doe")
                         .setLanguage("pl")
                 )
-                .setProducts(Arrays.asList(
+                .setProducts(Collections.singletonList(
                         new Product()
                                 .setName("Product name")
                                 .setQuantity(1)

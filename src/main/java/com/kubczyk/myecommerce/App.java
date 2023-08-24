@@ -1,20 +1,16 @@
 package com.kubczyk.myecommerce;
 
 import com.kubczyk.myecommerce.productcatalog.HashMapProductStorage;
-import com.kubczyk.myecommerce.productcatalog.Product;
 import com.kubczyk.myecommerce.productcatalog.ProductCatalog;
 import com.kubczyk.myecommerce.sales.Sales;
 import com.kubczyk.myecommerce.sales.cart.CartStorage;
 import com.kubczyk.myecommerce.sales.offering.OfferCalculator;
-import com.kubczyk.myecommerce.sales.product.InMemoryProductDetailsProvider;
-import com.kubczyk.myecommerce.sales.product.ProductCatalogProductDetailsProvider;
-import com.kubczyk.myecommerce.sales.product.ProductDetails;
+import com.kubczyk.myecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @SpringBootApplication
 public class App {

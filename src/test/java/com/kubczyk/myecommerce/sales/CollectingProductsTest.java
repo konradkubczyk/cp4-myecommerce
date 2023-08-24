@@ -3,9 +3,7 @@ package com.kubczyk.myecommerce.sales;
 import com.kubczyk.myecommerce.sales.cart.Cart;
 import com.kubczyk.myecommerce.sales.cart.CartStorage;
 import com.kubczyk.myecommerce.sales.offering.OfferCalculator;
-import com.kubczyk.myecommerce.sales.product.AlwaysMissingProductDetailsProvider;
-import com.kubczyk.myecommerce.sales.product.InMemoryProductDetailsProvider;
-import com.kubczyk.myecommerce.sales.product.ProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,3 +1,3 @@
-package com.kubczyk.myecommerce.sales.product;
+package com.kubczyk.myecommerce.sales.productdetails;
 
 public class NoSuchProductException extends IllegalStateException {}

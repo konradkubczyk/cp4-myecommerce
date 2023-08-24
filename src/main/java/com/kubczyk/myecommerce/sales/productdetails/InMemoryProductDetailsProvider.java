@@ -1,7 +1,4 @@
-package com.kubczyk.myecommerce.sales.product;
-
-import com.kubczyk.myecommerce.sales.product.ProductDetails;
-import com.kubczyk.myecommerce.sales.product.ProductDetailsProvider;
+package com.kubczyk.myecommerce.sales.productdetails;
 
 import java.util.ArrayList;
 import java.util.List;

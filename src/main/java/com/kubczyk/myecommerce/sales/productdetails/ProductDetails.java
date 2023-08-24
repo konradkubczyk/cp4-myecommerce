@@ -1,4 +1,4 @@
-package com.kubczyk.myecommerce.sales.product;
+package com.kubczyk.myecommerce.sales.productdetails;
 
 import java.math.BigDecimal;
 

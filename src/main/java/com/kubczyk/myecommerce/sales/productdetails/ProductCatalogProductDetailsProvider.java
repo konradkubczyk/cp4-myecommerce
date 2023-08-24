@@ -1,4 +1,4 @@
-package com.kubczyk.myecommerce.sales.product;
+package com.kubczyk.myecommerce.sales.productdetails;
 
 import com.kubczyk.myecommerce.productcatalog.Product;
 import com.kubczyk.myecommerce.productcatalog.ProductCatalog;

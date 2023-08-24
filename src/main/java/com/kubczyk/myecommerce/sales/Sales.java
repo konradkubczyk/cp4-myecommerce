@@ -6,9 +6,9 @@ import com.kubczyk.myecommerce.sales.offering.EveryNItemLineDiscountPolicy;
 import com.kubczyk.myecommerce.sales.offering.Offer;
 import com.kubczyk.myecommerce.sales.offering.OfferCalculator;
 import com.kubczyk.myecommerce.sales.offering.TotalDiscountPolicy;
-import com.kubczyk.myecommerce.sales.product.NoSuchProductException;
-import com.kubczyk.myecommerce.sales.product.ProductDetails;
-import com.kubczyk.myecommerce.sales.product.ProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.productdetails.NoSuchProductException;
+import com.kubczyk.myecommerce.sales.productdetails.ProductDetails;
+import com.kubczyk.myecommerce.sales.productdetails.ProductDetailsProvider;
 
 import java.math.BigDecimal;
 import java.util.Optional;

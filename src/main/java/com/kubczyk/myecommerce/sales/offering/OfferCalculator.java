@@ -1,8 +1,8 @@
 package com.kubczyk.myecommerce.sales.offering;
 
 import com.kubczyk.myecommerce.sales.cart.CartItem;
-import com.kubczyk.myecommerce.sales.product.ProductDetails;
-import com.kubczyk.myecommerce.sales.product.ProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.productdetails.ProductDetails;
+import com.kubczyk.myecommerce.sales.productdetails.ProductDetailsProvider;
 
 import java.math.BigDecimal;
 import java.util.List;
