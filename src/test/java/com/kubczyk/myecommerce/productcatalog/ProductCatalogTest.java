@@ -19,13 +19,24 @@ public class ProductCatalogTest {
 
     @Test
     void itAllowsToAddProduct() {
-        //Arrange
+        // Arrange
         ProductCatalog catalog = thereIsProductCatalog();
-        //Act
-        String productId = catalog.addProduct("lego set 8080", "nice one");
-        //Assert
+        
+        // Act
+        catalog.addProduct("Tasty Food", "Very yummy indeed :)");
+        
+        // Assert
         List<Product> products = catalog.allProducts();
         assert 1 == products.size();
+    }
+
+    @Test
+    void itAllowsToListMyProducts() {
+        ProductCatalog catalog = thereIsProductCatalog();
+
+        List<Product> products = catalog.allProducts();
+
+        assertListIsEmpty(products);
     }
 
     @Test
@@ -60,7 +71,7 @@ public class ProductCatalogTest {
     }
 
     @Test
-    void itDenyPublicationWithoutImageAndPrice() {
+    void itDeniesPublicationWithoutImageAndPrice() {
         ProductCatalog catalog = thereIsProductCatalog();
         String productId = catalog.addProduct("lego set 8080", "nice one");
 
