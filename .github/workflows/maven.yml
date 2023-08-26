@@ -21,5 +21,7 @@ jobs:
         java-version: '20'
         distribution: 'temurin'
         cache: 'maven'
+    - name: Show directory structure
+      run: ls -R
     - name: Test with Maven
       run: mvn test --file pom.xml
