@@ -27,15 +27,15 @@ public class JdbcPlaygroundTest {
     @Test
     void insert() {
         String productId = "my_product_1";
-        String productName = "Lego set";
+        String productName = "Light bulb";
 
         jdbcTemplate.update(
-                "INSERT INTO `products` (id, name) values (?,?)",
+                "INSERT INTO `products` (id, name) VALUES (?,?)",
                 productId,
                 productName);
 
         int productsCount = jdbcTemplate.queryForObject(
-                "select count(*) from `products`",
+                "SELECT count(*) FROM `products`",
                 Integer.class);
 
         assert productsCount == 1;
@@ -47,11 +47,11 @@ public class JdbcPlaygroundTest {
         String productName = "Lego set";
 
         jdbcTemplate.update(
-                "INSERT INTO `products` (id, name) values (?,?)",
+                "INSERT INTO `products` (id, name) VALUES (?,?)",
                 productId,
                 productName);
 
-        String querySql = "Select * from `products` where id = ?";
+        String querySql = "SELECT * FROM `products` WHERE id = ?";
         HashMap<String, Object> loaded = jdbcTemplate.queryForObject(
                 querySql,
                 new Object[]{productId},
@@ -67,7 +67,7 @@ public class JdbcPlaygroundTest {
     @Test
     void helloWorldViaDB() {
         String result = jdbcTemplate.queryForObject(
-                "select 'Hello world'",
+                "SELECT 'Hello world'",
                 String.class);
     }
 }

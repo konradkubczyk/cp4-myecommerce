@@ -21,7 +21,7 @@ public class PayUTest {
     }
 
     private PayU thereIsPayU() {
-        return new PayU(new RestTemplate());
+        return new PayU(PayUAPICredentials.sandbox(), new RestTemplate());
     }
 
     private OrderCreateRequest thereIsExampleOrderCreateRequest() {

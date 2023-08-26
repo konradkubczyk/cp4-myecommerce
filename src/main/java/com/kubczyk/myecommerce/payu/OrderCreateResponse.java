@@ -2,8 +2,12 @@ package com.kubczyk.myecommerce.payu;
 
 public class OrderCreateResponse {
 
-    String redirectUri;
-    String orderId;
+    private String redirectUri;
+    private String orderId;
+    private String extOrderId;
+
+    public OrderCreateResponse() {
+    }
 
     public String getRedirectUri() {
         return redirectUri;
@@ -20,6 +24,15 @@ public class OrderCreateResponse {
 
     public OrderCreateResponse setOrderId(String orderId) {
         this.orderId = orderId;
+        return this;
+    }
+
+    public String getExtOrderId() {
+        return extOrderId;
+    }
+
+    public OrderCreateResponse setExtOrderId(String extOrderId) {
+        this.extOrderId = extOrderId;
         return this;
     }
 }

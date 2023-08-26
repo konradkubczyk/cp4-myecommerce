@@ -6,7 +6,7 @@ public class BaseTestSchemaTest {
 
     @Test
     void testIt() {
-        assert true == true;
+        assert true;
     }
 
     @Test

@@ -1,15 +1,20 @@
 package com.kubczyk.myecommerce.sales;
 
+import com.kubczyk.myecommerce.payu.PayU;
+import com.kubczyk.myecommerce.payu.PayUAPICredentials;
 import com.kubczyk.myecommerce.sales.cart.Cart;
 import com.kubczyk.myecommerce.sales.cart.CartStorage;
 import com.kubczyk.myecommerce.sales.offering.Offer;
 import com.kubczyk.myecommerce.sales.offering.OfferCalculator;
 import com.kubczyk.myecommerce.sales.offering.OfferLine;
-import com.kubczyk.myecommerce.sales.productdetails.InMemoryProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.payment.PayUPaymentGateway;
 import com.kubczyk.myecommerce.sales.productdetails.ProductDetails;
+import com.kubczyk.myecommerce.sales.productdetails.InMemoryProductDetailsProvider;
+import com.kubczyk.myecommerce.sales.reservation.InMemoryReservationStorage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -31,7 +36,7 @@ public class CollectingProductsTest {
     void itAllowsToCollectProductsToCart() {
         // Arrange
         Sales sales = thereIsSalesModule();
-        String productId = thereIsProduct();
+        String productId = thereIsProduct("Catnip", BigDecimal.valueOf(5.99));
         String customer = thereIsCustomer("Anon");
 
         // Act
@@ -65,8 +70,8 @@ public class CollectingProductsTest {
     public void itGeneratesOfferBasedOnCurrentCarts() {
         // Arrange
         Sales sales = thereIsSalesModule();
-        String productId1 = thereIsProduct("Book A", BigDecimal.valueOf(25.52));
-        String productId2 = thereIsProduct("Book B", BigDecimal.valueOf(15.34));
+        String productId1 = thereIsProduct("Book A", BigDecimal.valueOf(17.23));
+        String productId2 = thereIsProduct("Book B", BigDecimal.valueOf(15.99));
         String customerId = thereIsCustomer("John");
 
         // Act
@@ -76,7 +81,7 @@ public class CollectingProductsTest {
         Offer offer = sales.getCurrentOffer(customerId);
 
         // Assert
-        assertThat(offer.getTotal()).isEqualTo(BigDecimal.valueOf(66.38));
+        assertThat(offer.getTotal()).isEqualByComparingTo(BigDecimal.valueOf(50.45));
         assertThat(offer.getOrderLines()).hasSize(2);
         assertThat(offer.getOrderLines()).filteredOn(orderLine -> orderLine.getProductId().equals(productId1))
                 .extracting(OfferLine::getQuantity).first().isEqualTo(2);
@@ -97,17 +102,12 @@ public class CollectingProductsTest {
         return customerId;
     }
 
-    private String thereIsProduct() {
-        return UUID.randomUUID().toString();
-    }
-
     private Sales thereIsSalesModule() {
         return new Sales(
                 cartStorage,
                 productDetails,
                 new OfferCalculator(productDetails),
-                new SpyPaymentGateway(),
-                new InMemoryReservationStorage()
-        );
+                new PayUPaymentGateway(new PayU(PayUAPICredentials.sandbox(), new RestTemplate())),
+                new InMemoryReservationStorage());
     }
 }

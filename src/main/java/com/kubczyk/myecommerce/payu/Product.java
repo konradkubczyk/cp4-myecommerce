@@ -1,10 +1,18 @@
 package com.kubczyk.myecommerce.payu;
 
 public class Product {
+    private String name;
+    private Integer unitPrice;
+    private Integer quantity;
 
-    String name;
-    Integer unitPrice;
-    Integer quantity;
+    public Product() {
+    }
+
+    public Product(String name, Integer unitPrice, Integer quantity) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
 
     public String getName() {
         return name;

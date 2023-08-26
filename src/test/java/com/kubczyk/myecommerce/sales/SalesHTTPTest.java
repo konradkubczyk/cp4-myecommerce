@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,13 +16,11 @@ import com.kubczyk.myecommerce.productcatalog.Product;
 import com.kubczyk.myecommerce.sales.reservation.ReservationDetails;
 import com.kubczyk.myecommerce.sales.reservation.OfferAcceptanceRequest;
 import com.kubczyk.myecommerce.productcatalog.ProductCatalog;
-import com.kubczyk.myecommerce.web.SessionCurrentCustomerContext;
-import com.kubczyk.myecommerce.web.CurrentCustomerContext;
 
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SalesHttpTest {
+public class SalesHTTPTest {
 
     @LocalServerPort
     int port;
@@ -35,7 +32,8 @@ public class SalesHttpTest {
     ProductCatalog productCatalog;
 
     @Test
-    void itAcceptOffer() {
+    void itAcceptsOffer() {
+        
         // Arrange
         String productId = thereIsProduct();
         String uri = getUrl(String.format("/api/cart/%s", productId));

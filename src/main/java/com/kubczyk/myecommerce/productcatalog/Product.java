@@ -1,8 +1,6 @@
 package com.kubczyk.myecommerce.productcatalog;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class Product {

@@ -2,32 +2,57 @@ package com.kubczyk.myecommerce.payu;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class PayU {
 
-    RestTemplate http;
+    private final PayUAPICredentials configuration;
+    private final RestTemplate http;
 
-    public PayU(RestTemplate http) {
+    public PayU(PayUAPICredentials configuration, RestTemplate http) {
+        this.configuration = configuration;
         this.http = http;
     }
 
     public OrderCreateResponse handle(OrderCreateRequest orderCreateRequest) {
-        String url = "https://secure.snd.payu.com/api/v2_1/orders";
+        orderCreateRequest.setMerchantPosId(configuration.getPosId());
+        orderCreateRequest.setNotifyUrl(configuration.getNotifyUrl());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
+        headers.add("content-type", "application/json");
         headers.add("Authorization", String.format("Bearer %s", getToken()));
-
         HttpEntity<OrderCreateRequest> request = new HttpEntity<>(orderCreateRequest, headers);
 
-        ResponseEntity<OrderCreateResponse> response = http.postForEntity(url, request, OrderCreateResponse.class);
+        ResponseEntity<OrderCreateResponse> response = http.postForEntity(
+                getUrl("/api/v2_1/orders"),
+                request,
+                OrderCreateResponse.class);
 
         return response.getBody();
     }
 
+    private String getUrl(String uri) {
+        return String.format("%s%s", configuration.getBaseUrl(), uri);
+    }
+
     private String getToken() {
-        return "d9a4536e-62ba-4f60-8017-6053211d3f47";
+        String body = String.format(
+                "grant_type=client_credentials&client_id=%s&client_secret=%s",
+                configuration.getClientId(),
+                configuration.getClientSecret());
+
+        String url = getUrl("/pl/standard/user/oauth/authorize");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+        HttpEntity<AccessTokenResponse> response = http.postForEntity(
+                url,
+                request,
+                AccessTokenResponse.class);
+
+        return response.getBody().getAccessToken();
     }
 }
