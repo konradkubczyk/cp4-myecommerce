@@ -8,8 +8,7 @@ public class NumericRepresentationTest {
     void lestCheckDouble() {
         double a = 1.101;
         double b = -2.109;
-        double c = a - b;
-        System.out.println(b-a);
+        System.out.println(b - a);
     }
 
     @Test

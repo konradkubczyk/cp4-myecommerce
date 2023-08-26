@@ -37,6 +37,10 @@ public class CreditCard {
         return creditAmount.compareTo(BigDecimal.valueOf(100)) < 0;
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }

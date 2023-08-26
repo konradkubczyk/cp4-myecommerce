@@ -55,6 +55,18 @@ public class Reservation {
         return total;
     }
 
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public Instant getPaidAt() {
+        return paidAt;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
     public boolean isPending() {
         return paidAt == null;
     }

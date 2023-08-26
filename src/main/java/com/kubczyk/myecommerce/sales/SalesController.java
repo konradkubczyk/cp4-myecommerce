@@ -3,7 +3,6 @@ package com.kubczyk.myecommerce.sales;
 import org.springframework.web.bind.annotation.*;
 
 import com.kubczyk.myecommerce.web.CurrentCustomerContext;
-import com.kubczyk.myecommerce.web.SessionCurrentCustomerContext;
 import com.kubczyk.myecommerce.sales.offering.Offer;
 import com.kubczyk.myecommerce.sales.reservation.ReservationDetails;
 import com.kubczyk.myecommerce.sales.reservation.OfferAcceptanceRequest;

@@ -5,6 +5,6 @@ public class PaymentData {
     private String paymentUrl;
 
     public String getPaymentUrl() {
-        return null;
+        return paymentUrl;
     }
 }

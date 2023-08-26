@@ -2,9 +2,6 @@ package com.kubczyk.myecommerce.sales.reservation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Embeddable
 public class ClientData {
