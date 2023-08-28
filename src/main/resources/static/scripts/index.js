@@ -1,5 +1,5 @@
 const a = 5;
-let b =5;
+let b = 5;
 
 const myFunction = (foo) => {
     console.log(foo);
@@ -26,17 +26,17 @@ const createHtmlElementFromString = (template) => {
 
 const createProductComponent = (product) => {
     const template = `
-        <li class="product">
-            <span>${product.name}</span>
-            <div>
-                <span>${product.price}</span>
+        <li class="product border rounded-3 d-flex flex-row justify-content-between shadow-none">
+            <!-- <img src="..." alt="..."> -->
+            <div class="d-flex gap-3 align-items-baseline">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text text-secondary">${product.desc}</p>
             </div>
-            <button
-                class="product__add-to-cart"
-                data-product-id="${product.id}"
-            >
-                Add to cart
+            <div>
+            <button class="product__add-to-cart btn btn-primary" data-product-id="${product.id}" href="#"  style="width: 10rem;">
+                Buy for ${product.price} PLN
             </button>
+            </div>
         </li>
     `;
 

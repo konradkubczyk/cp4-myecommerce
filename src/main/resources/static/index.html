@@ -1,20 +1,45 @@
 <html lang="en">
-    <head>
-        <title>My ecommerce</title>
-        <link rel="stylesheet" href="/css/main.css">
-        <script type="text/javascript" src="/scripts/index.js" defer></script>
-    </head>
-    <body>
-        <nav>
-            <h1>My ebook store - it works</h1>
-            <header>
-                <div class="cart">
-                    <span class="total">...</span>
-                    <span class="itemsCount">...</span>
-                    <button>BUY</button>
+
+<head>
+    <title>Buoy</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script type="text/javascript" src="/scripts/index.js" defer></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script type="text/javascript" src="/scripts/bootstrap.min.js" defer></script>
+</head>
+
+<body>
+    <div class="container-xxl my-5">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary rounded shadow-sm sticky-top" style="top: .5rem;">
+            <div class="container-fluid">
+                <div>
+                    <a class="navbar-brand fs-1 mx-2 text-dark-emphasis" href="/">Buoy</a>
                 </div>
-            </header>
+                <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 border rounded p-2">
+                        <div class="d-flex flex-column justify-content-around mx-2">
+                            <div class="d-flex gap-1">
+                                <span class="itemsCount">0</span>
+                                <span>items</span>
+                            </div>
+                            <div class="d-flex gap-1">
+                                <span class="total">0</span>
+                                <span>PLN</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Buy now</button>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+                        <button class="btn btn-secondary disabled" type="button">Login</button>
+                        <button class="btn btn-outline-secondary disabled" type="button">Sign Up</button>
+                    </div>
+                </div>
+            </div>
         </nav>
-        <ul id="productsList"></ul>
-    </body>
+        <main class="mt-5">
+            <ul id="productsList" class="d-flex flex-column"></ul>
+        </main>
+    </div>
+</body>
+
 </html>
