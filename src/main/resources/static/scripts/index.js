@@ -11,10 +11,10 @@ const getProducts = () => {
 }
 
 const addToCart = (productId) => {
-    return fetch(`/api/add-to-cart/${productId}`, {
+    return fetch(`/api/cart/${productId}`, {
         method: "POST",
         body: JSON.stringify({})
-    }).then(response => response.json());
+    });
 }
 
 const createHtmlElementFromString = (template) => {
@@ -26,35 +26,34 @@ const createHtmlElementFromString = (template) => {
 
 const createProductComponent = (product) => {
     const template = `
-        <li class="product border rounded-3 d-flex flex-row justify-content-between shadow-none">
+        <div class="product border rounded-3 d-flex flex-row justify-content-between align-items-center shadow-none p-3 gap-2">
             <!-- <img src="..." alt="..."> -->
             <div class="d-flex gap-3 align-items-baseline">
                 <h5 class="card-title">${product.name}</h5>
                 <p class="card-text text-secondary">${product.desc}</p>
             </div>
             <div>
-            <button class="product__add-to-cart btn btn-primary" data-product-id="${product.id}" href="#"  style="width: 10rem;">
+            <button class="product__add-to-cart btn btn-primary h-100" style="width: 10rem;" data-product-id="${product.id}" href="#">
                 Buy for ${product.price} PLN
             </button>
             </div>
-        </li>
+        </div>
     `;
 
     return createHtmlElementFromString(template);
 }
 
 const getCurrentOffer = () => {
-    return fetch("/api/get-current-offer")
+    return fetch("/api/current-offer")
         .then(response => response.json());
 }
 const refreshCurrentOffer = () => {
-    console.log('i am going to refresh offer');
     const offerElement = document.querySelector('.cart');
 
     getCurrentOffer()
         .then(offer => {
-            offerElement.querySelector('.total').textContent = `${offer.total} PLN`;
-            offerElement.querySelector('.itemsCount').textContent = `${offer.itemsCount} items`;
+            offerElement.querySelector('.total').textContent = `${offer.total}`;
+            offerElement.querySelector('.productsCount').textContent = `${offer.productsCount || 0}`;
         });
 }
 
