@@ -1,9 +1,6 @@
-const a = 5;
-let b = 5;
-
-const myFunction = (foo) => {
-    console.log(foo);
-}
+const orderNowButton = document.querySelector('.orderNow');
+const checkoutLayerEl = document.querySelector('#checkout');
+const checkoutForm = document.querySelector('#checkout form');
 
 const getProducts = () => {
     return fetch("/api/products")
@@ -54,6 +51,10 @@ const refreshCurrentOffer = () => {
         .then(offer => {
             offerElement.querySelector('.total').textContent = `${offer.total}`;
             offerElement.querySelector('.productsCount').textContent = `${offer.productsCount || 0}`;
+
+            if (offer.total && offer.productsCount > 0) {
+                orderNowButton.removeAttribute('disabled');
+            }
         });
 }
 
@@ -67,8 +68,27 @@ const initializeAddToCartHandler = (el) => {
     return el;
 }
 
+checkoutForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = new FormData(checkoutForm);
+    let request = {};
+    for (let [key, value] of data) {
+        request[key] = value;
+    }
+
+    fetch("/api/accept-offer", {
+        method: 'POST',
+        body: JSON.stringify(request),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(r => r.json())
+        .then(data => window.location.href = data.paymentUrl);
+});
+
 (async () => {
-    console.log("It works :)");
     const productsList = document.querySelector('#productsList');
 
     refreshCurrentOffer();
@@ -79,6 +99,4 @@ const initializeAddToCartHandler = (el) => {
         .map(p => createProductComponent(p))
         .map(el => initializeAddToCartHandler(el))
         .forEach(el => productsList.appendChild(el));
-
-    console.log("post get products");
 })();

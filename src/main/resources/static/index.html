@@ -2,7 +2,6 @@
 
 <head>
     <title>Buoy</title>
-    <link rel="stylesheet" href="/css/main.css">
     <script type="text/javascript" src="/scripts/index.js" defer></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script type="text/javascript" src="/scripts/bootstrap.min.js" defer></script>
@@ -27,11 +26,12 @@
                                 <span>PLN</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary">Buy now</button>
+                        <button class="orderNow btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkoutModal"
+                            disabled>Buy now</button>
                     </div>
                     <div class="d-flex flex-column gap-2">
-                        <button class="btn btn-secondary disabled" type="button">Login</button>
-                        <button class="btn btn-outline-secondary disabled" type="button">Sign Up</button>
+                        <button class="btn btn-secondary" type="button" disabled>Login</button>
+                        <button class="btn btn-outline-secondary" type="button" disabled>Sign Up</button>
                     </div>
                 </div>
             </div>
@@ -39,6 +39,37 @@
         <main class="mt-4">
             <div id="productsList" class="d-flex flex-column gap-3"></div>
         </main>
+
+        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="checkoutModalLabel">Checkout</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="checkout">
+                            <form class="mb-0">
+                                <div class="mb-3">
+                                    <label for="firstNameInput" class="form-label">First name</label>
+                                    <input type="text" class="form-control" id="firstNameInput" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastNameInput" class="form-label">Last name</label>
+                                    <input type="text" class="form-control" id="lastNameInput" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="emailInput" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="emailInput" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Place order</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
