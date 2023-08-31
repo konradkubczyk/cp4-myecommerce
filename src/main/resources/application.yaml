@@ -6,7 +6,7 @@
 #    zoo: gamma
 
 server:
-  port: 8181
+  port: 8080
 
 spring:
     jpa:
