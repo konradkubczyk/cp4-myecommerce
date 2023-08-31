@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 public class ListProductStorage implements ProductStorage {
 
     List<Product> products;
+
     public ListProductStorage() {
         this.products = new ArrayList<>();
     }
+
     @Override
     public List<Product> allProducts() {
         return products;

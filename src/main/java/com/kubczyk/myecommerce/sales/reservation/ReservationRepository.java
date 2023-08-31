@@ -3,5 +3,5 @@ package com.kubczyk.myecommerce.sales.reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReservationRepository
-        extends JpaRepository<Reservation, String> {
+                extends JpaRepository<Reservation, String> {
 }

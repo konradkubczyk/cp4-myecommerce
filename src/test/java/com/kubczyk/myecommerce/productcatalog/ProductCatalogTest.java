@@ -21,10 +21,10 @@ public class ProductCatalogTest {
     void itAllowsToAddProduct() {
         // Arrange
         ProductCatalog catalog = thereIsProductCatalog();
-        
+
         // Act
         catalog.addProduct("Tasty Food", "Very yummy indeed :)");
-        
+
         // Assert
         List<Product> products = catalog.allProducts();
         assert 1 == products.size();
@@ -48,6 +48,7 @@ public class ProductCatalogTest {
 
         assert loaded.getId().equals(productId);
     }
+
     @Test
     void itAllowsToChangePrice() {
         ProductCatalog catalog = thereIsProductCatalog();
@@ -77,8 +78,7 @@ public class ProductCatalogTest {
 
         assertThrows(
                 ProductCantBePublishedException.class,
-                () -> catalog.publishProduct(productId)
-        );
+                () -> catalog.publishProduct(productId));
     }
 
     @Test
@@ -101,11 +101,9 @@ public class ProductCatalogTest {
         assertEquals(0, catalog.allPublishedProducts().size());
     }
 
-
     private ProductCatalog thereIsProductCatalog() {
         return new ProductCatalog(
-                new HashMapProductStorage()
-        );
+                new HashMapProductStorage());
     }
 
     private void assertListIsEmpty(List<Product> products) {

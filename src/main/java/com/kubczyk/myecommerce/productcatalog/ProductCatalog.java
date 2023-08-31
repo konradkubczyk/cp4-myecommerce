@@ -19,8 +19,7 @@ public class ProductCatalog {
         Product newOne = new Product(
                 UUID.randomUUID(),
                 name,
-                desc
-        );
+                desc);
 
         productStorage.add(newOne);
         return newOne.getId();

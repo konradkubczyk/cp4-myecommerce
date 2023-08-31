@@ -18,10 +18,9 @@ public class EveryNItemLineDiscountPolicy {
         double i = Math.floor((double) line.getQuantity() / (double) quantityThreshold);
 
         BigDecimal lineTotal = line
-            .getUnitPrice()
-            .multiply(BigDecimal.valueOf(line.getQuantity()))
-            .subtract(BigDecimal.valueOf(i).multiply(line.getUnitPrice())
-        );
+                .getUnitPrice()
+                .multiply(BigDecimal.valueOf(line.getQuantity()))
+                .subtract(BigDecimal.valueOf(i).multiply(line.getUnitPrice()));
 
         return new OfferLine(line.getProductId(), line.getName(), line.getUnitPrice(), line.getQuantity(), lineTotal);
     }

@@ -1,3 +1,4 @@
 package com.kubczyk.myecommerce.sales.productdetails;
 
-public class NoSuchProductException extends IllegalStateException {}
+public class NoSuchProductException extends IllegalStateException {
+}

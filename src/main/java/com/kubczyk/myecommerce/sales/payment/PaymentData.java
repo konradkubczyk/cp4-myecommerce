@@ -1,7 +1,7 @@
 package com.kubczyk.myecommerce.sales.payment;
 
 public class PaymentData {
-    
+
     private final String id;
     private final String url;
 

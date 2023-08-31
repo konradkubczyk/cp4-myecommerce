@@ -33,7 +33,7 @@ public class SalesHTTPTest {
 
     @Test
     void itAcceptsOffer() {
-        
+
         // Arrange
         String productId = thereIsProduct();
         String uri = getUrl(String.format("/api/cart/%s", productId));
@@ -44,7 +44,7 @@ public class SalesHTTPTest {
         OfferAcceptanceRequest request = new OfferAcceptanceRequest();
         HttpHeaders headers = new HttpHeaders();
         headers.put(HttpHeaders.COOKIE, cookies);
-        request.setFirstname("Jakub").setLastname("Kanclerz").setEmail("kuba@example.com");
+        request.setFirstname("John").setLastname("Doe").setEmail("test@example.com");
         HttpEntity<OfferAcceptanceRequest> httpEntity = new HttpEntity<>(request, headers);
 
         ResponseEntity<ReservationDetails> response = http.postForEntity(getUrl("/api/accept-offer"), httpEntity,

@@ -7,6 +7,7 @@ import java.util.Optional;
 public class InMemoryProductDetailsProvider implements ProductDetailsProvider {
 
     List<ProductDetails> productDetails;
+
     public InMemoryProductDetailsProvider() {
         this.productDetails = new ArrayList<>();
     }

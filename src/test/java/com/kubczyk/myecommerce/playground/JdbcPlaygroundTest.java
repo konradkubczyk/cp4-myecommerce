@@ -54,15 +54,14 @@ public class JdbcPlaygroundTest {
         String querySql = "SELECT * FROM `products` WHERE id = ?";
         HashMap<String, Object> loaded = jdbcTemplate.queryForObject(
                 querySql,
-                new Object[]{productId},
+                new Object[] { productId },
                 (r, i) -> {
                     HashMap<String, Object> myResult = new HashMap<>();
                     myResult.put("product_id", r.getString("id"));
                     myResult.put("product_name", r.getString("name"));
-                    return  myResult;
+                    return myResult;
                 });
     }
-
 
     @Test
     void helloWorldViaDB() {

@@ -35,17 +35,20 @@ public class App {
 
         ProductCatalog productCatalog = new ProductCatalog(new HashMapProductStorage());
 
-        String product1 = productCatalog.addProduct("Item 1", "Laborum neque magnam sed ipsa. Voluptate fugiat sit quia ab voluptates ut. Nostrum aut aut sit occaecati iste.");
+        String product1 = productCatalog.addProduct("Item 1",
+                "Laborum neque magnam sed ipsa. Voluptate fugiat sit quia ab voluptates ut. Nostrum aut aut sit occaecati iste.");
         productCatalog.assignImage(product1, "images/p1.jpeg");
         productCatalog.changePrice(product1, BigDecimal.valueOf(20.99));
         productCatalog.publishProduct(product1);
 
-        String product2 = productCatalog.addProduct("Item 2", "Voluptatem voluptas pariatur ipsa quo ut nulla laudantium ullam. Et est aut qui. Earum adipisci consectetur ea quasi vel odio perspiciatis quis.");
+        String product2 = productCatalog.addProduct("Item 2",
+                "Voluptatem voluptas pariatur ipsa quo ut nulla laudantium ullam. Et est aut qui. Earum adipisci consectetur ea quasi vel odio perspiciatis quis.");
         productCatalog.assignImage(product2, "images/p2.jpeg");
         productCatalog.changePrice(product2, BigDecimal.valueOf(15.74));
         productCatalog.publishProduct(product2);
 
-        String product3 = productCatalog.addProduct("Item 3", "Voluptatibus quod ipsam omnis quaerat voluptatem omnis et.");
+        String product3 = productCatalog.addProduct("Item 3",
+                "Voluptatibus quod ipsam omnis quaerat voluptatem omnis et.");
         productCatalog.assignImage(product3, "images/p3.jpeg");
         productCatalog.changePrice(product3, BigDecimal.valueOf(10.99));
         productCatalog.publishProduct(product3);
@@ -55,7 +58,8 @@ public class App {
         productCatalog.changePrice(product4, BigDecimal.valueOf(5.99));
         productCatalog.publishProduct(product4);
 
-        String product5 = productCatalog.addProduct("Item 5", "Earum adipisci consectetur ea quasi vel odio perspiciatis quis.");
+        String product5 = productCatalog.addProduct("Item 5",
+                "Earum adipisci consectetur ea quasi vel odio perspiciatis quis.");
         productCatalog.assignImage(product5, "images/p5.jpeg");
         productCatalog.changePrice(product5, BigDecimal.valueOf(2.99));
         productCatalog.publishProduct(product5);

@@ -1,3 +1,4 @@
 package com.kubczyk.myecommerce.creditcard;
 
-public class LimitAssignedTwiceException extends IllegalStateException {}
+public class LimitAssignedTwiceException extends IllegalStateException {
+}

@@ -20,120 +20,121 @@ import com.kubczyk.myecommerce.sales.productdetails.ProductDetails;
 
 public class OfferCalculatorTest {
 
-    private InMemoryProductDetailsProvider productDetails;
+        private InMemoryProductDetailsProvider productDetails;
 
-    @BeforeEach
-    void setUp() {
-        this.productDetails = new InMemoryProductDetailsProvider();
-    }
+        @BeforeEach
+        void setUp() {
+                this.productDetails = new InMemoryProductDetailsProvider();
+        }
 
-    @Test
-    public void itCreateOfferBasedOnCartItems() {
-        String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(10.10));
-        String product2 = thereIsProduct("Lego set 2", BigDecimal.valueOf(20.10));
-        List<CartItem> cartItems = Arrays.asList(
-                new CartItem(product1, 2),
-                new CartItem(product2, 1));
+        @Test
+        public void itCreateOfferBasedOnCartItems() {
+                String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(10.10));
+                String product2 = thereIsProduct("Lego set 2", BigDecimal.valueOf(20.10));
+                List<CartItem> cartItems = Arrays.asList(
+                                new CartItem(product1, 2),
+                                new CartItem(product2, 1));
 
-        OfferCalculator offerCalculator = thereIsOfferCalculator();
+                OfferCalculator offerCalculator = thereIsOfferCalculator();
 
-        Offer offer = offerCalculator.calculateOffer(cartItems);
+                Offer offer = offerCalculator.calculateOffer(cartItems);
 
-        assertThat(offer.getTotal())
-                .isEqualTo(BigDecimal.valueOf(40.3));
-    }
+                assertThat(offer.getTotal())
+                                .isEqualTo(BigDecimal.valueOf(40.3));
+        }
 
-    @Test
-    public void itAllowsToApplyTotalDiscount() {
-        String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
-        List<CartItem> cartItems = Arrays.asList(
-                new CartItem(product1, 1));
-        OfferCalculator offerCalculator = thereIsOfferCalculator();
-        TotalDiscountPolicy totalDiscount = thereIsTotalDiscount(BigDecimal.valueOf(50), BigDecimal.valueOf(10));
+        @Test
+        public void itAllowsToApplyTotalDiscount() {
+                String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
+                List<CartItem> cartItems = Arrays.asList(
+                                new CartItem(product1, 1));
+                OfferCalculator offerCalculator = thereIsOfferCalculator();
+                TotalDiscountPolicy totalDiscount = thereIsTotalDiscount(BigDecimal.valueOf(50),
+                                BigDecimal.valueOf(10));
 
-        Offer offer = offerCalculator.calculateOffer(cartItems, totalDiscount);
+                Offer offer = offerCalculator.calculateOffer(cartItems, totalDiscount);
 
-        assertThat(offer.getTotal())
-                .isEqualTo(BigDecimal.valueOf(90));
-    }
+                assertThat(offer.getTotal())
+                                .isEqualTo(BigDecimal.valueOf(90));
+        }
 
-    @Test
-    public void itAllowsToApplyDiscountPerLine() {
-        String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
-        List<CartItem> cartItems = Arrays.asList(
-                new CartItem(product1, 5));
-        OfferCalculator offerCalculator = thereIsOfferCalculator();
-        EveryNItemLineDiscountPolicy lineDiscount = thereIsPerLineDiscount(5);
+        @Test
+        public void itAllowsToApplyDiscountPerLine() {
+                String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
+                List<CartItem> cartItems = Arrays.asList(
+                                new CartItem(product1, 5));
+                OfferCalculator offerCalculator = thereIsOfferCalculator();
+                EveryNItemLineDiscountPolicy lineDiscount = thereIsPerLineDiscount(5);
 
-        Offer offer = offerCalculator.calculateOffer(cartItems, TotalDiscountPolicy.noDiscount(), lineDiscount);
+                Offer offer = offerCalculator.calculateOffer(cartItems, TotalDiscountPolicy.noDiscount(), lineDiscount);
 
-        assertThat(offer.getTotal())
-                .isEqualByComparingTo(BigDecimal.valueOf(400));
-    }
+                assertThat(offer.getTotal())
+                                .isEqualByComparingTo(BigDecimal.valueOf(400));
+        }
 
-    @ParameterizedTest
-    @MethodSource("getTotalDiscounts")
-    public void itAllowsToApplyTotalDiscount(TotalDiscountPolicy policy, BigDecimal result) {
-        String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
-        List<CartItem> cartItems = Arrays.asList(
-                new CartItem(product1, 1));
-        OfferCalculator offerCalculator = thereIsOfferCalculator();
+        @ParameterizedTest
+        @MethodSource("getTotalDiscounts")
+        public void itAllowsToApplyTotalDiscount(TotalDiscountPolicy policy, BigDecimal result) {
+                String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
+                List<CartItem> cartItems = Arrays.asList(
+                                new CartItem(product1, 1));
+                OfferCalculator offerCalculator = thereIsOfferCalculator();
 
-        Offer offer = offerCalculator.calculateOffer(cartItems, policy);
+                Offer offer = offerCalculator.calculateOffer(cartItems, policy);
 
-        assertThat(offer.getTotal())
-                .isEqualTo(result);
-    }
+                assertThat(offer.getTotal())
+                                .isEqualTo(result);
+        }
 
-    @ParameterizedTest
-    @MethodSource("getLinesDiscounts")
-    public void itAllowsToApplyDiscountPerLine(EveryNItemLineDiscountPolicy policy, Integer itemsCount,
-            BigDecimal result) {
-        String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
-        List<CartItem> cartItems = Arrays.asList(
-                new CartItem(product1, itemsCount));
-        OfferCalculator offerCalculator = thereIsOfferCalculator();
+        @ParameterizedTest
+        @MethodSource("getLinesDiscounts")
+        public void itAllowsToApplyDiscountPerLine(EveryNItemLineDiscountPolicy policy, Integer itemsCount,
+                        BigDecimal result) {
+                String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(100));
+                List<CartItem> cartItems = Arrays.asList(
+                                new CartItem(product1, itemsCount));
+                OfferCalculator offerCalculator = thereIsOfferCalculator();
 
-        Offer offer = offerCalculator.calculateOffer(cartItems, TotalDiscountPolicy.noDiscount(), policy);
+                Offer offer = offerCalculator.calculateOffer(cartItems, TotalDiscountPolicy.noDiscount(), policy);
 
-        assertThat(offer.getTotal())
-                .isEqualByComparingTo(result);
-    }
+                assertThat(offer.getTotal())
+                                .isEqualByComparingTo(result);
+        }
 
-    public static Stream<Arguments> getLinesDiscounts() {
-        return Stream.of(
-                Arguments.of(thereIsPerLineDiscount(5), 5, BigDecimal.valueOf(400)),
-                Arguments.of(thereIsPerLineDiscount(5), 6, BigDecimal.valueOf(500)),
-                Arguments.of(thereIsPerLineDiscount(5), 4, BigDecimal.valueOf(400)));
-    }
+        public static Stream<Arguments> getLinesDiscounts() {
+                return Stream.of(
+                                Arguments.of(thereIsPerLineDiscount(5), 5, BigDecimal.valueOf(400)),
+                                Arguments.of(thereIsPerLineDiscount(5), 6, BigDecimal.valueOf(500)),
+                                Arguments.of(thereIsPerLineDiscount(5), 4, BigDecimal.valueOf(400)));
+        }
 
-    public static Stream<Arguments> getTotalDiscounts() {
-        return Stream.of(
-                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(50), BigDecimal.valueOf(10)),
-                        BigDecimal.valueOf(90)),
-                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(100), BigDecimal.valueOf(10)),
-                        BigDecimal.valueOf(90)),
-                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(99), BigDecimal.valueOf(10)),
-                        BigDecimal.valueOf(90)),
-                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(101), BigDecimal.valueOf(10)),
-                        BigDecimal.valueOf(100)));
-    }
+        public static Stream<Arguments> getTotalDiscounts() {
+                return Stream.of(
+                                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(50), BigDecimal.valueOf(10)),
+                                                BigDecimal.valueOf(90)),
+                                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(100), BigDecimal.valueOf(10)),
+                                                BigDecimal.valueOf(90)),
+                                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(99), BigDecimal.valueOf(10)),
+                                                BigDecimal.valueOf(90)),
+                                Arguments.of(thereIsTotalDiscount(BigDecimal.valueOf(101), BigDecimal.valueOf(10)),
+                                                BigDecimal.valueOf(100)));
+        }
 
-    private String thereIsProduct(String name, BigDecimal price) {
-        String id = UUID.randomUUID().toString();
-        this.productDetails.add(new ProductDetails(id, name, price));
-        return id;
-    }
+        private String thereIsProduct(String name, BigDecimal price) {
+                String id = UUID.randomUUID().toString();
+                this.productDetails.add(new ProductDetails(id, name, price));
+                return id;
+        }
 
-    private static TotalDiscountPolicy thereIsTotalDiscount(BigDecimal total, BigDecimal discountValue) {
-        return new TotalDiscountPolicy(total, discountValue);
-    }
+        private static TotalDiscountPolicy thereIsTotalDiscount(BigDecimal total, BigDecimal discountValue) {
+                return new TotalDiscountPolicy(total, discountValue);
+        }
 
-    private static EveryNItemLineDiscountPolicy thereIsPerLineDiscount(int quantityThreshold) {
-        return new EveryNItemLineDiscountPolicy(quantityThreshold);
-    }
+        private static EveryNItemLineDiscountPolicy thereIsPerLineDiscount(int quantityThreshold) {
+                return new EveryNItemLineDiscountPolicy(quantityThreshold);
+        }
 
-    private OfferCalculator thereIsOfferCalculator() {
-        return new OfferCalculator(productDetails);
-    }
+        private OfferCalculator thereIsOfferCalculator() {
+                return new OfferCalculator(productDetails);
+        }
 }

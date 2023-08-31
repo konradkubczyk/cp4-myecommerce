@@ -38,14 +38,12 @@ public class PayUTest {
                         .setPhone("654111654")
                         .setFirstName("John")
                         .setLanguage("Doe")
-                        .setLanguage("pl")
-                )
+                        .setLanguage("pl"))
                 .setProducts(Collections.singletonList(
                         new Product()
                                 .setName("Product name")
                                 .setQuantity(1)
-                                .setUnitPrice(21000)
-                ));
+                                .setUnitPrice(21000)));
         return exampleRequest;
     }
 }

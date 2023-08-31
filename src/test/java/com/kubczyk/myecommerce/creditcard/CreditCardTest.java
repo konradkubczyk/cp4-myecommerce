@@ -9,24 +9,24 @@ public class CreditCardTest {
 
     @Test
     void itAllowsToAssignCreditLimit() {
-        //Arrange
+        // Arrange
         CreditCard card = new CreditCard("1234-5678");
-        //Act
+        // Act
         card.assignLimit(BigDecimal.valueOf(1000));
-        //Assert
+        // Assert
         assertEquals(BigDecimal.valueOf(1000), card.getBalance());
         assert card.getBalance().equals(BigDecimal.valueOf(1000));
     }
 
     @Test
     void itAllowsToAssignDifferentCreditLimits() {
-        //Arrange
+        // Arrange
         CreditCard card1 = new CreditCard("1234-5678");
         CreditCard card2 = new CreditCard("1234-5679");
-        //Act
+        // Act
         card1.assignLimit(BigDecimal.valueOf(1000));
         card2.assignLimit(BigDecimal.valueOf(1100));
-        //Assert
+        // Assert
         assertEquals(BigDecimal.valueOf(1000), card1.getBalance());
         assertEquals(BigDecimal.valueOf(1100), card2.getBalance());
     }
@@ -65,8 +65,7 @@ public class CreditCardTest {
 
         assertThrows(
                 LimitAlreadyAssignedException.class,
-                () -> card.assignLimit(BigDecimal.valueOf(1100))
-        );
+                () -> card.assignLimit(BigDecimal.valueOf(1100)));
     }
 
     @Test

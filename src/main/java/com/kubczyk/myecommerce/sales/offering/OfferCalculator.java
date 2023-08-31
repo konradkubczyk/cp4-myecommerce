@@ -18,9 +18,8 @@ public class OfferCalculator {
 
     public Offer calculateOffer(List<CartItem> cartItems) {
         List<OfferLine> offerItems = cartItems.stream()
-            .map(this::createOrderLine)
-            .collect(Collectors.toList()
-        );
+                .map(this::createOrderLine)
+                .collect(Collectors.toList());
 
         Offer offer = new Offer(offerItems, calculateTotal(offerItems));
 
@@ -32,26 +31,24 @@ public class OfferCalculator {
 
         BigDecimal lineTotal = details.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
         return new OfferLine(
-            cartItem.getProductId(),
-            details.getName(),
-            details.getPrice(),
-            cartItem.getQuantity(),
-            lineTotal
-        );
+                cartItem.getProductId(),
+                details.getName(),
+                details.getPrice(),
+                cartItem.getQuantity(),
+                lineTotal);
     }
 
     private BigDecimal calculateTotal(List<OfferLine> orderItems) {
         return orderItems.stream()
-            .map(orderLine -> orderLine.getLineTotal())
-            .reduce(BigDecimal::add)
-            .orElse(BigDecimal.ZERO);
+                .map(orderLine -> orderLine.getLineTotal())
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 
     public Offer calculateOffer(List<CartItem> cartItems, TotalDiscountPolicy totalDiscount) {
         List<OfferLine> offerItems = cartItems.stream()
-            .map(this::createOrderLine)
-            .collect(Collectors.toList()
-        );
+                .map(this::createOrderLine)
+                .collect(Collectors.toList());
 
         Offer offer = new Offer(offerItems, calculateTotal(offerItems));
 
@@ -60,12 +57,12 @@ public class OfferCalculator {
         return offer;
     }
 
-    public Offer calculateOffer(List<CartItem> cartItems, TotalDiscountPolicy totalDiscount, EveryNItemLineDiscountPolicy lineDiscount) {
+    public Offer calculateOffer(List<CartItem> cartItems, TotalDiscountPolicy totalDiscount,
+            EveryNItemLineDiscountPolicy lineDiscount) {
         List<OfferLine> offerItems = cartItems.stream()
-            .map(this::createOrderLine)
-            .map(lineDiscount::apply)
-            .collect(Collectors.toList()
-        );
+                .map(this::createOrderLine)
+                .map(lineDiscount::apply)
+                .collect(Collectors.toList());
 
         Offer offer = new Offer(offerItems, calculateTotal(offerItems));
 

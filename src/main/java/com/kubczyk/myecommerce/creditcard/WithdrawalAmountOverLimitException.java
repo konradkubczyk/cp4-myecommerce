@@ -1,3 +1,4 @@
 package com.kubczyk.myecommerce.creditcard;
 
-public class WithdrawalAmountOverLimitException extends IllegalStateException {}
+public class WithdrawalAmountOverLimitException extends IllegalStateException {
+}
