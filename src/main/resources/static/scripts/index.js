@@ -44,8 +44,24 @@ const getCurrentOffer = () => {
     return fetch("/api/current-offer")
         .then(response => response.json());
 }
+
 const refreshCurrentOffer = () => {
     const offerElement = document.querySelector('.cart');
+
+    let priceWithoutDiscount = 0;
+
+    let orderSummaryHTML = `
+        <table class="table bg-body-secondary mb-0">
+            <thead>
+                <tr>
+                    <th scope="col" class="bg-body-secondary">Product</th>
+                    <th scope="col" class="bg-body-secondary">Price</th>
+                    <th scope="col" class="bg-body-secondary">Quantity</th>
+                    <th scope="col" class="bg-body-secondary">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
     getCurrentOffer()
         .then(offer => {
@@ -55,6 +71,39 @@ const refreshCurrentOffer = () => {
             if (offer.total && offer.productsCount > 0) {
                 orderNowButton.removeAttribute('disabled');
             }
+
+            Object.values(offer.orderLines).forEach(orderLine => {
+                orderSummaryHTML += `
+                    <tr>
+                        <td class="bg-body-secondary">${orderLine.name}</td>
+                        <td class="bg-body-secondary">${orderLine.unitPrice}</td>
+                        <td class="bg-body-secondary">${orderLine.quantity}</td>
+                        <td class="bg-body-secondary">${orderLine.lineTotal}</td>
+                    </tr>
+                `;
+                priceWithoutDiscount += orderLine.unitPrice * orderLine.quantity;
+            });
+
+            orderSummaryHTML += `
+                </tbody>
+                <tfoot>
+                    <tr class="fw-bold">
+                        <td colspan="3" class="bg-body-secondary text-secondary">Discount</td>
+                        <td class="bg-body-secondary text-secondary">${(offer.total - priceWithoutDiscount).toFixed(2)}</td>
+                    </tr>
+                    <tr class="fw-bold">
+                        <td colspan="3" class="bg-body-secondary border-bottom-0">Total</td>
+                        <td class="bg-body-secondary border-bottom-0">${offer.total}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            `;
+
+            console.log(orderSummaryHTML);
+
+            document.querySelector('.orderSummary').innerHTML = orderSummaryHTML;
+
+            document.querySelector('.payButton').innerText = `Pay ${offer.total} PLN`;
         });
 }
 

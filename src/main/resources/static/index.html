@@ -45,12 +45,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="checkoutModalLabel">Checkout</h1>
+                        <h2 class="modal-title fs-5" id="checkoutModalLabel">Checkout</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div id="checkout">
-                            <form class="mb-0">
+                            <div class="border rounded bg-body-secondary">
+                                <div class="orderSummary"></div>
+                            </div>
+                            <form class="mt-3 mb-0">
                                 <div class="mb-3">
                                     <label for="firstNameInput" class="form-label">First name</label>
                                     <input type="text" class="form-control" id="firstNameInput" required>
@@ -63,7 +66,7 @@
                                     <label for="emailInput" class="form-label">Email address</label>
                                     <input type="email" class="form-control" id="emailInput" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Place order</button>
+                                <button type="submit" class="payButton btn btn-primary w-100">Pay now</button>
                             </form>
                         </div>
                     </div>
