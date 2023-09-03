@@ -1,10 +1,3 @@
-#key_1: value
-#key_2: [1,2,3]
-#key_3:
-#  nested_key_1: [foo, mo]
-#  nested_key_2:
-#    zoo: gamma
-
 server:
   port: 8080
 
