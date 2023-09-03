@@ -99,8 +99,6 @@ const refreshCurrentOffer = () => {
             </table>
             `;
 
-            console.log(orderSummaryHTML);
-
             document.querySelector('.orderSummary').innerHTML = orderSummaryHTML;
 
             document.querySelector('.payButton').innerText = `Pay ${offer.total} PLN`;
