@@ -3,6 +3,7 @@ package com.kubczyk.myecommerce;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import com.kubczyk.myecommerce.payu.PayU;
@@ -20,7 +21,6 @@ import com.kubczyk.myecommerce.sales.reservation.InMemoryReservationStorage;
 import com.kubczyk.myecommerce.web.SessionCurrentCustomerContext;
 
 import java.math.BigDecimal;
-
 import jakarta.servlet.http.HttpSession;
 
 @SpringBootApplication
@@ -90,5 +90,10 @@ public class App {
     @Bean
     ProductDetailsProvider createProductDetailsProvider(ProductCatalog catalog) {
         return new ProductCatalogProductDetailsProvider(catalog);
+    }
+
+    @Bean
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
