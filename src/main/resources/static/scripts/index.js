@@ -147,3 +147,29 @@ checkoutForm.addEventListener('submit', (e) => {
         .map(el => initializeAddToCartHandler(el))
         .forEach(el => productsList.appendChild(el));
 })();
+
+const submitRegistrationForm = (event) => {
+    event.preventDefault();
+    const registerForm = document.querySelector('.registerForm');
+    const data = new FormData(registerForm);
+    let request = {};
+    for (let [key, value] of data) {
+        request[key] = value;
+    }
+
+    fetch("/api/register", {
+        method: 'POST',
+        body: JSON.stringify(request),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = "/login";
+            } else {
+                alert(data.error);
+            }
+        });
+}
